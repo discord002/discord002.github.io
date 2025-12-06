@@ -1,3 +1,7 @@
+* {
+  margin: 0
+}
+
 .glass {
     background-color: rgba(255, 0, 0, 0.5); /* 0.5 = 50% transparent */
 }
