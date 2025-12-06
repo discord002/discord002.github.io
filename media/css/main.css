@@ -1,259 +1,111 @@
-/* ===================== RESET ===================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===================== DARK THEME ===================== */
+body.dark-theme {
+    background: #2e2e2e;
+    color: #f5f5f5;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #D3D3D3;
+body.dark-theme .ui {
+    background: #3a3a3a;
+    color: #f5f5f5;
+    border: 1px solid #555;
+}
+
+body.dark-theme .ui .btn {
+    background: #4a4a4a;
+    color: #fff;
+    border: 1px solid #666;
+}
+
+body.dark-theme .ui .btn:hover {
+    background: #5a5a5a;
+}
+
+body.dark-theme .sidebar {
+    background: #1f1f1f;
+    border-right: 1px solid #444;
     color: #fff;
 }
 
-/* ===================== UNIVERSAL UI BASE ===================== */
-.ui {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 400px;
-    height: 200px;
-
-    border-radius: 1rem;
-    text-align: center;
-    transition: all 0.25s ease;
-}
-
-/* Buttons inside any UI */
-.ui .btn {
-    padding: 10px 20px;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-/* ===================== LIQUID GLASS THEME ===================== */
-.ui.glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(14px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-}
-
-.ui.glass:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 48px rgba(0,0,0,0.45);
-    transform: scale(1.03);
-}
-
-/* Glass button */
-.ui.glass .btn {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.ui.glass .btn:hover {
-    background: rgba(255,255,255,0.18);
-    transform: scale(1.05);
-}
-
-/* ===================== STANDARD THEME ===================== */
-.ui.standard {
-    background: #1e1e1e;
-    border: 1px solid #2d2d2d;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-}
-
-.ui.standard:hover {
-    background: #252525;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    transform: scale(1.02);
-}
-
-/* Standard button */
-.ui.standard .btn {
+body.dark-theme .sidebar .btn {
     background: #2a2a2a;
-    border: 1px solid #3a3a3a;
+    color: #fff;
+    border: 1px solid #555;
 }
 
-.ui.standard .btn:hover {
-    background: #333;
-    transform: scale(1.05);
+body.dark-theme .sidebar .btn:hover {
+    background: #3a3a3a;
 }
 
-/* ===================== SIDEBAR THEMES ===================== */
-.sidebar {
-    width: 240px;
-    height: 100vh;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+body.dark-theme .topbar {
+    background: #3a3a3a;
+    color: #fff;
+    border: 1px solid #555;
 }
 
-.sidebar.glass {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-right: 1px solid rgba(255,255,255,0.2);
-}
-
-.sidebar.standard {
-    background: #171717;
-    border-right: 1px solid #242424;
-}
-
-.sidebar .btn {
-    padding: 10px 20px;
-    border-radius: 0.5rem;
-    transition: 0.2s ease;
-}
-
-.sidebar.glass .btn {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.sidebar.glass .btn:hover {
-    background: rgba(255,255,255,0.18);
-}
-
-.sidebar.standard .btn {
+body.dark-theme .topbar .search {
     background: #2a2a2a;
-    border: 1px solid #3a3a3a;
+    color: #fff;
 }
 
-.sidebar.standard .btn:hover {
-    background: #333;
+/* Notifications */
+body.dark-theme .notification {
+    background: #444;
+    color: #fff;
+    border: 1px solid #666;
 }
 
-/* ===================== RESPONSIVE SIDEBAR ===================== */
-/* Tablets */
-@media (max-width: 900px) {
-    .sidebar {
-        width: 200px;
-        padding: 15px;
-        gap: 12px;
-    }
-
-    .sidebar .btn {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
+/* ===================== LIGHT THEME ===================== */
+body.light-theme {
+    background: #d3d3d3;
+    color: #111;
 }
 
-/* Phones / Small screens */
-@media (max-width: 600px) {
-    .sidebar {
-        width: 70px;
-        padding: 10px;
-        align-items: center;
-        gap: 10px;
-    }
-
-    /* Hide text on buttons, show icons only */
-    .sidebar .btn:not(.img-btn) {
-        font-size: 0;
-        padding: 12px;
-    }
-
-    .sidebar .btn:not(.img-btn)::after {
-        content: attr(data-short); /* Add data-short="#" to buttons */
-        font-size: 14px;
-        display: block;
-        text-align: center;
-    }
+body.light-theme .ui {
+    background: #f5f5f5;
+    color: #111;
+    border: 1px solid #ccc;
 }
 
-/* ===================== RESPONSIVE UI BOX ===================== */
-.ui {
-    width: 90%;
-    max-width: 400px;
-    height: auto; /* Let height adjust to content */
-    padding: 20px;
-    margin: 10px auto;
+body.light-theme .ui .btn {
+    background: #e0e0e0;
+    color: #111;
+    border: 1px solid #bbb;
 }
 
-@media (max-width: 600px) {
-    .ui {
-        width: 95%;
-        padding: 15px;
-    }
+body.light-theme .ui .btn:hover {
+    background: #d5d5d5;
 }
 
-/* ===================== DEV PORTAL LAYOUT ===================== */
-.content {
-    margin-left: 240px;
-    padding: 20px;
-    width: calc(100% - 240px);
+body.light-theme .sidebar {
+    background: #e6e6e6;
+    border-right: 1px solid #ccc;
+    color: #111;
 }
 
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    border-radius: 0.8rem;
+body.light-theme .sidebar .btn {
+    background: #dcdcdc;
+    color: #111;
+    border: 1px solid #bbb;
 }
 
-.topbar.glass {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.2);
+body.light-theme .sidebar .btn:hover {
+    background: #d0d0d0;
 }
 
-.topbar .search {
-    padding: 8px 12px;
-    border-radius: 0.5rem;
-    border: none;
-    width: 200px;
+body.light-theme .topbar {
+    background: #f0f0f0;
+    color: #111;
+    border: 1px solid #ccc;
 }
 
-/* Code example styling */
-.code-example {
-    margin-top: 20px;
+body.light-theme .topbar .search {
+    background: #e6e6e6;
+    color: #111;
 }
 
-.code-example pre {
-    background: rgba(255,255,255,0.05);
-    padding: 15px;
-    border-radius: 0.5rem;
-    overflow-x: auto;
+/* Notifications */
+body.light-theme .notification {
+    background: #f0f0f0;
+    color: #111;
+    border: 1px solid #ccc;
 }
-
-/* ===================== RESPONSIVE DEV PORTAL ===================== */
-/* Tablets */
-@media (max-width: 900px) {
-    .content { margin-left: 200px; width: calc(100% - 200px); }
-    .topbar { flex-wrap: wrap; }
-    .topbar .search { width: 100%; margin-top: 5px; }
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-    .content { margin-left: 70px; width: calc(100% - 70px); padding: 10px; }
-    
-    .topbar {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .topbar .search { width: 100%; }
-
-    .ui {
-        width: 95%;
-        padding: 15px;
-    }
-}
-
-/* ===================== READY FOR FUTURE THEMES ===================== */
-/* Example:
-.ui.neon { ... }
-.ui.smooth { ... }
-.ui.material { ... }
-*/
