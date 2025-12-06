@@ -163,6 +163,8 @@ body {
     .sidebar .btn:not(.img-btn)::after {
         content: attr(data-short); /* Add data-short="#" to buttons */
         font-size: 14px;
+        display: block;
+        text-align: center;
     }
 }
 
@@ -176,6 +178,73 @@ body {
 }
 
 @media (max-width: 600px) {
+    .ui {
+        width: 95%;
+        padding: 15px;
+    }
+}
+
+/* ===================== DEV PORTAL LAYOUT ===================== */
+.content {
+    margin-left: 240px;
+    padding: 20px;
+    width: calc(100% - 240px);
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: 0.8rem;
+}
+
+.topbar.glass {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.topbar .search {
+    padding: 8px 12px;
+    border-radius: 0.5rem;
+    border: none;
+    width: 200px;
+}
+
+/* Code example styling */
+.code-example {
+    margin-top: 20px;
+}
+
+.code-example pre {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+
+/* ===================== RESPONSIVE DEV PORTAL ===================== */
+/* Tablets */
+@media (max-width: 900px) {
+    .content { margin-left: 200px; width: calc(100% - 200px); }
+    .topbar { flex-wrap: wrap; }
+    .topbar .search { width: 100%; margin-top: 5px; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .content { margin-left: 70px; width: calc(100% - 70px); padding: 10px; }
+    
+    .topbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .topbar .search { width: 100%; }
+
     .ui {
         width: 95%;
         padding: 15px;
