@@ -4,54 +4,64 @@ body.dark-theme {
     color: #f5f5f5;
 }
 
-body.dark-theme .ui {
-    background: #3a3a3a;
-    color: #f5f5f5;
-    border: 1px solid #555;
+body.dark-theme .ui,
+body.dark-theme .ui.glass,
+body.dark-theme .ui.standard {
+    background: #3a3a3a !important;
+    color: #f5f5f5 !important;
+    border: 1px solid #555 !important;
 }
 
-body.dark-theme .ui .btn {
-    background: #4a4a4a;
-    color: #fff;
-    border: 1px solid #666;
+body.dark-theme .ui .btn,
+body.dark-theme .ui.glass .btn,
+body.dark-theme .ui.standard .btn {
+    background: #4a4a4a !important;
+    color: #fff !important;
+    border: 1px solid #666 !important;
 }
 
-body.dark-theme .ui .btn:hover {
-    background: #5a5a5a;
+body.dark-theme .ui .btn:hover,
+body.dark-theme .ui.glass .btn:hover,
+body.dark-theme .ui.standard .btn:hover {
+    background: #5a5a5a !important;
 }
 
-body.dark-theme .sidebar {
-    background: #1f1f1f;
-    border-right: 1px solid #444;
-    color: #fff;
+body.dark-theme .sidebar,
+body.dark-theme .sidebar.glass,
+body.dark-theme .sidebar.standard {
+    background: #1f1f1f !important;
+    border-right: 1px solid #444 !important;
+    color: #fff !important;
 }
 
 body.dark-theme .sidebar .btn {
-    background: #2a2a2a;
-    color: #fff;
-    border: 1px solid #555;
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
 }
 
 body.dark-theme .sidebar .btn:hover {
-    background: #3a3a3a;
+    background: #3a3a3a !important;
 }
 
-body.dark-theme .topbar {
-    background: #3a3a3a;
-    color: #fff;
-    border: 1px solid #555;
+body.dark-theme .topbar,
+body.dark-theme .topbar.glass,
+body.dark-theme .topbar.standard {
+    background: #3a3a3a !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
 }
 
 body.dark-theme .topbar .search {
-    background: #2a2a2a;
-    color: #fff;
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
 }
 
-/* Notifications */
 body.dark-theme .notification {
-    background: #444;
-    color: #fff;
-    border: 1px solid #666;
+    background: #444 !important;
+    color: #fff !important;
+    border: 1px solid #666 !important;
 }
 
 /* ===================== LIGHT THEME ===================== */
@@ -60,52 +70,62 @@ body.light-theme {
     color: #111;
 }
 
-body.light-theme .ui {
-    background: #f5f5f5;
-    color: #111;
-    border: 1px solid #ccc;
+body.light-theme .ui,
+body.light-theme .ui.glass,
+body.light-theme .ui.standard {
+    background: #f5f5f5 !important;
+    color: #111 !important;
+    border: 1px solid #ccc !important;
 }
 
-body.light-theme .ui .btn {
-    background: #e0e0e0;
-    color: #111;
-    border: 1px solid #bbb;
+body.light-theme .ui .btn,
+body.light-theme .ui.glass .btn,
+body.light-theme .ui.standard .btn {
+    background: #e0e0e0 !important;
+    color: #111 !important;
+    border: 1px solid #bbb !important;
 }
 
-body.light-theme .ui .btn:hover {
-    background: #d5d5d5;
+body.light-theme .ui .btn:hover,
+body.light-theme .ui.glass .btn:hover,
+body.light-theme .ui.standard .btn:hover {
+    background: #d5d5d5 !important;
 }
 
-body.light-theme .sidebar {
-    background: #e6e6e6;
-    border-right: 1px solid #ccc;
-    color: #111;
+body.light-theme .sidebar,
+body.light-theme .sidebar.glass,
+body.light-theme .sidebar.standard {
+    background: #e6e6e6 !important;
+    border-right: 1px solid #ccc !important;
+    color: #111 !important;
 }
 
 body.light-theme .sidebar .btn {
-    background: #dcdcdc;
-    color: #111;
-    border: 1px solid #bbb;
+    background: #dcdcdc !important;
+    color: #111 !important;
+    border: 1px solid #bbb !important;
 }
 
 body.light-theme .sidebar .btn:hover {
-    background: #d0d0d0;
+    background: #d0d0d0 !important;
 }
 
-body.light-theme .topbar {
-    background: #f0f0f0;
-    color: #111;
-    border: 1px solid #ccc;
+body.light-theme .topbar,
+body.light-theme .topbar.glass,
+body.light-theme .topbar.standard {
+    background: #f0f0f0 !important;
+    color: #111 !important;
+    border: 1px solid #ccc !important;
 }
 
 body.light-theme .topbar .search {
-    background: #e6e6e6;
-    color: #111;
+    background: #e6e6e6 !important;
+    color: #111 !important;
+    border: 1px solid #ccc !important;
 }
 
-/* Notifications */
 body.light-theme .notification {
-    background: #f0f0f0;
-    color: #111;
-    border: 1px solid #ccc;
+    background: #f0f0f0 !important;
+    color: #111 !important;
+    border: 1px solid #ccc !important;
 }
