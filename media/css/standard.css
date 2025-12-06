@@ -1,20 +1,38 @@
-body {
-  height: 100vh;
-  width: 100vw;
-
-  /* MUST have a background to see transparency */
-  background: #222;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.glass {
-  width: 300px;
-  height: 200px;
+/* Full page background */
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #111, #333); /* dark background to see transparency */
+}
 
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+/* Glass container */
+#glass {
+    width: 400px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.5); /* semi-transparent dark */
+    border-radius: 1rem;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* text color */
+}
 
-  border-radius: 10px;
+/* Inner window (optional styling) */
+#window {
+    text-align: center;
 }
