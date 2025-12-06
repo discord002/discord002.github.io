@@ -3,13 +3,17 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: Arial, sans-serif;
-    background: #e0e0e0;
 
+    /* Dark background */
+    background: #0d0d0d;
+    color: #f2f2f2; /* Light text */
 }
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+
     height: 100vh;
     width: 100vw;
 }
