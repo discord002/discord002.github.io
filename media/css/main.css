@@ -1,25 +1,154 @@
+/* Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-
-    /* Dark background */
-    background: #0d0d0d;
-    color: #f2f2f2; /* Light text */
+    box-sizing: border-box;
 }
 
 body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #fff;
+}
+
+/* ============================================
+   UNIVERSAL UI BASE
+   ============================================ */
+
+.ui {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    height: 100vh;
-    width: 100vw;
+    width: 400px;
+    height: 200px;
+
+    border-radius: 1rem;
+    text-align: center;
+    transition: all 0.25s ease;
 }
+
+/* Buttons inside any UI */
+.ui .btn {
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* ============================================
+   LIQUID GLASS THEME
+   ============================================ */
+
+.ui.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+.ui.glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+    transform: scale(1.03);
+}
+
+/* Glass button */
+.ui.glass .btn {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.ui.glass .btn:hover {
+    background: rgba(255,255,255,0.18);
+    transform: scale(1.05);
+}
+
+/* ============================================
+   STANDARD THEME
+   ============================================ */
+
+.ui.standard {
+    background: #1e1e1e;
+    border: 1px solid #2d2d2d;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.ui.standard:hover {
+    background: #252525;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    transform: scale(1.02);
+}
+
+/* Standard button */
+.ui.standard .btn {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+}
+
+.ui.standard .btn:hover {
+    background: #333;
+    transform: scale(1.05);
+}
+
+/* ============================================
+   OPTIONAL: SIDEBAR THEMES
+   ============================================ */
+
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Liquid Glass Sidebar */
+.sidebar.glass {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Standard Sidebar */
+.sidebar.standard {
+    background: #171717;
+    border-right: 1px solid #242424;
+}
+
+.sidebar .btn {
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    transition: 0.2s ease;
+}
+
+.sidebar.glass .btn {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar.glass .btn:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+.sidebar.standard .btn {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+}
+
+.sidebar.standard .btn:hover {
+    background: #333;
+}
+
+/* ============================================
+   READY FOR FUTURE THEMES
+   ============================================ */
+/* Example:
+.ui.neon { ... }
+.ui.smooth { ... }
+.ui.material { ... }
+*/
