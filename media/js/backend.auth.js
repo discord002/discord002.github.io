@@ -1,42 +1,56 @@
-// backend.auth.js
+import express from "express";
 import admin from "firebase-admin";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
 
-// Initialize Firebase Admin SDK
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || "{}"); // store JSON in env variable
+dotenv.config(); // Load .env
+
+if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
+  throw new Error("FIREBASE_SERVICE_ACCOUNT is not set");
+}
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
 const auth = admin.auth();
+const app = express();
+app.use(bodyParser.json());
 
-// ---------------------- AUTH FUNCTIONS ----------------------
-
-// Sign up user with email and password
-export async function signUp(email, password) {
+// Sign up
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
   try {
     const userRecord = await auth.createUser({ email, password });
-    return { uid: userRecord.uid, email: userRecord.email };
-  } catch (error) {
-    throw new Error(error.message);
+    res.status(201).json({ uid: userRecord.uid, email: userRecord.email });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
-}
+});
 
-// Generate password reset link
-export async function resetPassword(email) {
+// Password reset
+app.post("/reset-password", async (req, res) => {
+  const { email } = req.body;
   try {
-    const resetLink = await auth.generatePasswordResetLink(email);
-    return resetLink;
-  } catch (error) {
-    throw new Error(error.message);
+    const link = await auth.generatePasswordResetLink(email);
+    res.status(200).json({ resetLink: link });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
-}
+});
 
-// Verify Firebase ID token
-export async function verifyToken(idToken) {
+// Verify token
+app.post("/verify-token", async (req, res) => {
+  const { idToken } = req.body;
   try {
-    const decodedToken = await auth.verifyIdToken(idToken);
-    return { uid: decodedToken.uid, email: decodedToken.email };
-  } catch (error) {
-    throw new Error("Invalid or expired token.");
+    const decoded = await auth.verifyIdToken(idToken);
+    res.status(200).json({ uid: decoded.uid, email: decoded.email });
+  } catch (err) {
+    res.status(401).json({ error: "Invalid token" });
   }
-}
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Auth server running on port ${PORT}`));
