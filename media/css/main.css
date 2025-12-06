@@ -1,131 +1,151 @@
+/* ===================== UNIVERSAL VARIABLES ===================== */
+:root {
+    --dark-bg: #2e2e2e;
+    --dark-ui-bg: rgba(58, 58, 58, 0.9);
+    --dark-btn-bg: #4a4a4a;
+    --dark-btn-hover: #5a5a5a;
+    --dark-sidebar-bg: rgba(31, 31, 31, 0.95);
+    --dark-topbar-bg: rgba(58, 58, 58, 0.9);
+    --dark-notification-bg: #444;
+
+    --light-bg: #d3d3d3;
+    --light-ui-bg: rgba(245, 245, 245, 0.9);
+    --light-btn-bg: #e0e0e0;
+    --light-btn-hover: #d5d5d5;
+    --light-sidebar-bg: rgba(230, 230, 230, 0.95);
+    --light-topbar-bg: rgba(240, 240, 240, 0.9);
+    --light-notification-bg: #f0f0f0;
+}
+
 /* ===================== DARK THEME ===================== */
 body.dark-theme {
-    background: #2e2e2e;
+    background: var(--dark-bg);
     color: #f5f5f5;
 }
 
+/* Universal UI Styles for Dark Theme */
 body.dark-theme .ui,
-body.dark-theme .ui.glass,
-body.dark-theme .ui.standard {
-    background: #3a3a3a !important;
-    color: #f5f5f5 !important;
-    border: 1px solid #555 !important;
+body.dark-theme .ui.standard,
+body.dark-theme .ui.glass {
+    background: var(--dark-ui-bg);
+    color: #f5f5f5;
+    border: 1px solid #555;
+    backdrop-filter: blur(10px); /* Liquid glass effect */
 }
 
 body.dark-theme .ui .btn,
-body.dark-theme .ui.glass .btn,
-body.dark-theme .ui.standard .btn {
-    background: #4a4a4a !important;
-    color: #fff !important;
-    border: 1px solid #666 !important;
+body.dark-theme .ui.standard .btn,
+body.dark-theme .ui.glass .btn {
+    background: var(--dark-btn-bg);
+    color: #fff;
+    border: 1px solid #666;
 }
 
 body.dark-theme .ui .btn:hover,
-body.dark-theme .ui.glass .btn:hover,
-body.dark-theme .ui.standard .btn:hover {
-    background: #5a5a5a !important;
+body.dark-theme .ui.standard .btn:hover,
+body.dark-theme .ui.glass .btn:hover {
+    background: var(--dark-btn-hover);
 }
 
 body.dark-theme .sidebar,
-body.dark-theme .sidebar.glass,
-body.dark-theme .sidebar.standard {
-    background: #1f1f1f !important;
-    border-right: 1px solid #444 !important;
-    color: #fff !important;
+body.dark-theme .sidebar.standard,
+body.dark-theme .sidebar.glass {
+    background: var(--dark-sidebar-bg);
+    border-right: 1px solid #444;
+    color: #fff;
+    backdrop-filter: blur(12px); /* Liquid glass for sidebar */
 }
 
 body.dark-theme .sidebar .btn {
-    background: #2a2a2a !important;
-    color: #fff !important;
-    border: 1px solid #555 !important;
+    background: #2a2a2a;
+    border: 1px solid #555;
 }
 
 body.dark-theme .sidebar .btn:hover {
-    background: #3a3a3a !important;
+    background: #3a3a3a;
 }
 
 body.dark-theme .topbar,
-body.dark-theme .topbar.glass,
-body.dark-theme .topbar.standard {
-    background: #3a3a3a !important;
-    color: #fff !important;
-    border: 1px solid #555 !important;
+body.dark-theme .topbar.standard,
+body.dark-theme .topbar.glass {
+    background: var(--dark-topbar-bg);
+    border: 1px solid #555;
+    color: #fff;
+    backdrop-filter: blur(10px);
 }
 
 body.dark-theme .topbar .search {
-    background: #2a2a2a !important;
-    color: #fff !important;
-    border: 1px solid #555 !important;
+    background: #2a2a2a;
+    border: 1px solid #555;
 }
 
 body.dark-theme .notification {
-    background: #444 !important;
-    color: #fff !important;
-    border: 1px solid #666 !important;
+    background: var(--dark-notification-bg);
+    border: 1px solid #666;
 }
 
 /* ===================== LIGHT THEME ===================== */
 body.light-theme {
-    background: #d3d3d3;
+    background: var(--light-bg);
     color: #111;
 }
 
 body.light-theme .ui,
-body.light-theme .ui.glass,
-body.light-theme .ui.standard {
-    background: #f5f5f5 !important;
-    color: #111 !important;
-    border: 1px solid #ccc !important;
+body.light-theme .ui.standard,
+body.light-theme .ui.glass {
+    background: var(--light-ui-bg);
+    color: #111;
+    border: 1px solid #ccc;
+    backdrop-filter: blur(10px); /* Liquid glass effect */
 }
 
 body.light-theme .ui .btn,
-body.light-theme .ui.glass .btn,
-body.light-theme .ui.standard .btn {
-    background: #e0e0e0 !important;
-    color: #111 !important;
-    border: 1px solid #bbb !important;
+body.light-theme .ui.standard .btn,
+body.light-theme .ui.glass .btn {
+    background: var(--light-btn-bg);
+    color: #111;
+    border: 1px solid #bbb;
 }
 
 body.light-theme .ui .btn:hover,
-body.light-theme .ui.glass .btn:hover,
-body.light-theme .ui.standard .btn:hover {
-    background: #d5d5d5 !important;
+body.light-theme .ui.standard .btn:hover,
+body.light-theme .ui.glass .btn:hover {
+    background: var(--light-btn-hover);
 }
 
 body.light-theme .sidebar,
-body.light-theme .sidebar.glass,
-body.light-theme .sidebar.standard {
-    background: #e6e6e6 !important;
-    border-right: 1px solid #ccc !important;
-    color: #111 !important;
+body.light-theme .sidebar.standard,
+body.light-theme .sidebar.glass {
+    background: var(--light-sidebar-bg);
+    border-right: 1px solid #ccc;
+    color: #111;
+    backdrop-filter: blur(12px);
 }
 
 body.light-theme .sidebar .btn {
-    background: #dcdcdc !important;
-    color: #111 !important;
-    border: 1px solid #bbb !important;
+    background: #dcdcdc;
+    border: 1px solid #bbb;
 }
 
 body.light-theme .sidebar .btn:hover {
-    background: #d0d0d0 !important;
+    background: #d0d0d0;
 }
 
 body.light-theme .topbar,
-body.light-theme .topbar.glass,
-body.light-theme .topbar.standard {
-    background: #f0f0f0 !important;
-    color: #111 !important;
-    border: 1px solid #ccc !important;
+body.light-theme .topbar.standard,
+body.light-theme .topbar.glass {
+    background: var(--light-topbar-bg);
+    border: 1px solid #ccc;
+    color: #111;
+    backdrop-filter: blur(10px);
 }
 
 body.light-theme .topbar .search {
-    background: #e6e6e6 !important;
-    color: #111 !important;
-    border: 1px solid #ccc !important;
+    background: #e6e6e6;
+    border: 1px solid #ccc;
 }
 
 body.light-theme .notification {
-    background: #f0f0f0 !important;
-    color: #111 !important;
-    border: 1px solid #ccc !important;
+    background: var(--light-notification-bg);
+    border: 1px solid #ccc;
 }
