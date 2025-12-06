@@ -13,41 +13,70 @@ body {
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #111, #333); /* Dark background behind glass */
+    background: linear-gradient(135deg, #111, #333);
 }
 
-/* Liquid Glass Base Class */
+/* UNIVERSAL LIQUID GLASS CLASS */
 .liquid-glass {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    /* Size defaults (can be overridden per element) */
     width: 400px;
     height: 200px;
 
-    /* Frosted glass effect */
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
 
-    /* Borders & shadows */
     border-radius: 1rem;
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
 
-    /* Text color */
     color: #fff;
     text-align: center;
 
-    /* Smooth transitions for hover */
     transition: all 0.3s ease;
 }
 
-/* Optional hover effect */
+/* Hover effect */
 .liquid-glass:hover {
-    background: rgba(0, 0, 0, 0.55);
-    box-shadow: 0 12px 48px rgba(0,0,0,0.5);
-    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+    transform: scale(1.03);
+}
+
+/* BUTTON STYLING INSIDE ANY LIQUID GLASS */
+.liquid-glass .btn {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: 0.25s ease;
+}
+
+/* Button hover */
+.liquid-glass .btn:hover {
+    background: rgba(255,255,255,0.18);
+    transform: scale(1.05);
+}
+
+/* SIDEBAR USING LIQUID GLASS */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar .btn:hover {
+    background: rgba(255,255,255,0.18);
+    transform: scale(1.05);
+}
+
+/* OPTIONAL: CONTAINER USING LIQUID GLASS */
+.container {
+    /* You can override sizes here */
 }
