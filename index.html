@@ -13,24 +13,44 @@
     <meta property="og:description" content="Discord002 Website">
 
     <meta name="keywords" content="DISCORD002, DSCWEB, Discord for web02">
-    <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="media/favicon.ico">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="media/css/main.css">
 
     <title>Discord002</title>
 </head>
-<div class="sidebar glass">
-    
-    <!-- Image Button -->
-    <button class="btn" style="width: 50px; height: 50px; padding: 0; background: none; border: none;">
-        <img src="media/icon.png" alt="DISCORD002" style="width: 100%; height: auto; border-radius: 0.5rem;">
-    </button>
+<body class="dark-theme"> <!-- or "light-theme" -->
 
-    <!-- Example Channel Button -->
-    <button class="btn"># general</button>
-    <button class="btn"># database</button>
+    <!-- Sidebar -->
+    <aside class="sidebar glass">
+        <!-- Logo / Image Button -->
+        <button class="btn img-btn" style="width: 50px; height: 50px; padding: 0; border: none; background: none;">
+            <img src="media/icon.png" alt="DISCORD002" style="width: 100%; height: auto; border-radius: 0.5rem;">
+        </button>
 
-</div>
+        <!-- Channel Buttons -->
+        <button class="btn" data-short="#general"># general</button>
+        <button class="btn" data-short="#database"># database</button>
+    </aside>
 
+    <!-- Main Content -->
+    <main class="content">
+        <div class="topbar glass">
+            <input type="text" class="search" placeholder="Search...">
+        </div>
+
+        <section class="ui glass">
+            <h2>Welcome to Discord002</h2>
+            <p>This is a demo of the dark/light themed UI.</p>
+            <button class="btn">Click Me</button>
+        </section>
+
+        <!-- Example notification -->
+        <div class="notification">
+            This is a notification!
+        </div>
+    </main>
+
+</body>
 </html>
