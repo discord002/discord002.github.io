@@ -7,26 +7,29 @@
   <link rel="stylesheet" href="media/css/developer.css">
   <link rel="stylesheet" href="media/css/auth.css">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
-
+  <!-- Auth Modal Styles (if not in auth.css) -->
   <style>
-    /* Simple auth modal styling */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+    }
     .auth-modal {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #2e2e2e;
+      background: rgba(40,40,40,0.95);
       padding: 30px;
       border-radius: 20px;
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 15px;
+      width: 320px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
       z-index: 1000;
-      width: 300px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
     .auth-modal input {
       padding: 10px;
@@ -34,34 +37,26 @@
       border: 1px solid #555;
       background: #3a3a3a;
       color: #fff;
+      outline: none;
     }
     .auth-modal button {
       padding: 10px;
       border-radius: 10px;
       border: none;
-      background: #007aff;
-      color: white;
+      background: #5865F2;
+      color: #fff;
       cursor: pointer;
+      transition: background 0.3s;
     }
-    .auth-error {
-      color: #ff6b6b;
-      font-size: 0.9rem;
-    }
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-    }
+    .auth-modal button:hover { background: #4752c4; }
+    .auth-error { color: #ff6b6b; font-size: 0.9rem; text-align: center; }
   </style>
 </head>
 <body class="dark-theme">
 
-  <!-- Sidebar -->
+  <!-- Sidebar is handled by developer.css -->
   <aside class="sidebar glass dev-sidebar">
-    <button class="btn img-btn" style="width: 50px; height: 50px; padding: 0; border: none; background: none;">
-      <img src="media/icon.png" alt="DISCORD002" style="width: 50px; height: 50px; border-radius: 0.5rem;">
-    </button>
+    <button class="btn img-btn"><img src="media/icon.png" alt="DISCORD002"></button>
     <button class="btn" data-short="Docs">Docs</button>
     <button class="btn" data-short="API">API</button>
     <button class="btn" data-short="Guides">Guides</button>
@@ -69,11 +64,10 @@
     <button class="btn" data-short="Changelog">Changelog</button>
   </aside>
 
-  <!-- Main Content -->
   <main class="content">
     <header class="topbar glass">
-      <input type="text" placeholder="Search docs..." class="search">
-      <button class="btn" id="signInBtn">Sign In</button>
+      <input type="text" placeholder="Search docs...">
+      <button id="signInBtn">Sign In</button>
     </header>
 
     <section class="ui glass">
@@ -89,13 +83,11 @@ fetch("https://api.discord002.com/user/12345")
         </code></pre>
       </section>
     </section>
-
-    <div class="notification">This is a notification!</div>
   </main>
 
   <!-- Auth Modal -->
-  <div class="overlay" id="authOverlay" style="display:none;"></div>
-  <div class="auth-modal" id="authModal" style="display:none;">
+  <div class="overlay" id="authOverlay"></div>
+  <div class="auth-modal" id="authModal">
     <h2>Sign In / Register</h2>
     <input type="email" id="authEmail" placeholder="Email">
     <input type="password" id="authPass" placeholder="Password">
@@ -105,60 +97,58 @@ fetch("https://api.discord002.com/user/12345")
     <button id="closeAuth" style="background:#ff3b30;">Close</button>
   </div>
 
-  <script>
-    // Firebase config
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT.firebaseapp.com",
       projectId: "YOUR_PROJECT_ID",
     };
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.getAuth(app);
 
-    // Show modal
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
     const overlay = document.getElementById('authOverlay');
     const modal = document.getElementById('authModal');
-    document.getElementById('signInBtn').onclick = () => {
-      overlay.style.display = 'block';
-      modal.style.display = 'flex';
-    };
-    document.getElementById('closeAuth').onclick = () => {
-      overlay.style.display = 'none';
-      modal.style.display = 'none';
-    };
-
     const authError = document.getElementById('authError');
 
-    // Login
-    document.getElementById('loginBtn').onclick = async () => {
+    const showModal = () => { overlay.style.display = 'block'; modal.style.display = 'flex'; };
+    const hideModal = () => { overlay.style.display = 'none'; modal.style.display = 'none'; };
+
+    document.getElementById('signInBtn').onclick = showModal;
+    document.getElementById('closeAuth').onclick = hideModal;
+
+    const login = async () => {
       const email = document.getElementById('authEmail').value;
       const pass = document.getElementById('authPass').value;
       try {
-        await firebase.signInWithEmailAndPassword(auth, email, pass);
+        await signInWithEmailAndPassword(auth, email, pass);
         authError.textContent = '';
         alert(`Logged in as ${email}`);
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
+        hideModal();
       } catch (err) {
         authError.textContent = err.message;
       }
     };
 
-    // Register
-    document.getElementById('registerBtn').onclick = async () => {
+    const register = async () => {
       const email = document.getElementById('authEmail').value;
       const pass = document.getElementById('authPass').value;
       try {
-        await firebase.createUserWithEmailAndPassword(auth, email, pass);
+        await createUserWithEmailAndPassword(auth, email, pass);
         authError.textContent = '';
         alert(`Registered as ${email}`);
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
+        hideModal();
       } catch (err) {
         authError.textContent = err.message;
       }
     };
-  </script>
 
+    document.getElementById('loginBtn').onclick = login;
+    document.getElementById('registerBtn').onclick = register;
+  </script>
 </body>
 </html>
