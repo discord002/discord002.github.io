@@ -1,0 +1,189 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #fff;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ===================== DARK / LIGHT THEME ===================== */
+body.dark-theme {
+    background: #121212;
+    color: #ffffff;
+}
+
+body.light-theme {
+    background: #f4f4f4;
+    color: #000;
+}
+
+/* ===================== CONTENT AREA ===================== */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* ===================== TOPBAR ===================== */
+.topbar {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 1rem;
+}
+
+.topbar .search {
+    padding: 10px 15px;
+    width: 60%;
+    border-radius: 0.5rem;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.1);
+    color: inherit;
+}
+
+body.light-theme .topbar .search {
+    background: rgba(0,0,0,0.05);
+}
+
+/* ===================== UNIVERSAL UI BOX ===================== */
+.ui {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+
+    text-align: center;
+    border-radius: 1rem;
+    transition: all 0.25s ease;
+}
+
+.ui .btn {
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+    border: none;
+}
+
+/* ===================== GLASS THEME ===================== */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+.glass:hover {
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+}
+
+.glass .btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.glass .btn:hover {
+    background: rgba(255,255,255,0.18);
+    transform: scale(1.05);
+}
+
+/* Light theme fix */
+body.light-theme .glass {
+    background: rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+body.light-theme .glass .btn {
+    color: #000;
+    background: rgba(0,0,0,0.1);
+}
+
+/* ===================== SIDEBAR ===================== */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar .btn {
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s ease;
+    text-align: left;
+}
+
+/* ===================== RESPONSIVE SIDEBAR ===================== */
+@media (max-width: 700px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .sidebar .btn:not(.img-btn) {
+        font-size: 0;
+        width: 45px;
+        height: 45px;
+        padding: 0;
+    }
+
+    .sidebar .btn:not(.img-btn)::after {
+        content: attr(data-short);
+        font-size: 12px;
+    }
+}
+
+/* ===================== NOTIFICATION ===================== */
+.notification {
+    background: #2e2e2e;
+    color: #fff;
+    padding: 12px 18px;
+    margin-top: 20px;
+    border-radius: 0.5rem;
+    border-left: 4px solid #4a7dff;
+    width: fit-content;
+}
+
+body.light-theme .notification {
+    background: #e0e0e0;
+    color: #000;
+    border-left: 4px solid #2954d6;
+}
