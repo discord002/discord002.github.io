@@ -9,33 +9,66 @@ body {
     font-family: Arial, sans-serif;
     background: #121212;
     color: #fff;
+    display: flex;
+}
+
+/* ===================== LAYOUT ===================== */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* ===================== TOPBAR ===================== */
+.topbar {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 1rem;
+}
+
+.topbar .search {
+    padding: 10px 15px;
+    width: 60%;
+    border-radius: 0.5rem;
+    border: none;
+    outline: none;
 }
 
 /* ===================== UNIVERSAL UI BASE ===================== */
 .ui {
     position: relative;
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     justify-content: center;
     align-items: center;
+    padding: 20px;
 
-    width: 400px;
-    height: 200px;
+    width: 90%;
+    max-width: 600px;
 
-    border-radius: 1rem;
     text-align: center;
+    border-radius: 1rem;
     transition: all 0.25s ease;
 }
 
-/* Buttons inside any UI */
+/* Buttons inside UI */
 .ui .btn {
     padding: 10px 20px;
     border-radius: 0.5rem;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: 0.2s;
+    border: none;
 }
 
 /* ===================== LIQUID GLASS THEME ===================== */
-.ui.glass {
+.glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(14px) saturate(180%);
     -webkit-backdrop-filter: blur(14px) saturate(180%);
@@ -43,95 +76,65 @@ body {
     box-shadow: 0 8px 32px rgba(0,0,0,0.35);
 }
 
-.ui.glass:hover {
+.glass:hover {
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 12px 48px rgba(0,0,0,0.45);
     transform: scale(1.03);
 }
 
-/* Glass button */
-.ui.glass .btn {
-    background: rgba(255,255,255,0.12);
+.glass .btn {
+    background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
 }
 
-.ui.glass .btn:hover {
+.glass .btn:hover {
     background: rgba(255,255,255,0.18);
     transform: scale(1.05);
 }
 
 /* ===================== STANDARD THEME ===================== */
-.ui.standard {
+.standard {
     background: #1e1e1e;
     border: 1px solid #2d2d2d;
     box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
-.ui.standard:hover {
+.standard:hover {
     background: #252525;
     box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     transform: scale(1.02);
 }
 
-/* Standard button */
-.ui.standard .btn {
+.standard .btn {
     background: #2a2a2a;
     border: 1px solid #3a3a3a;
 }
 
-.ui.standard .btn:hover {
+.standard .btn:hover {
     background: #333;
     transform: scale(1.05);
 }
 
-/* ===================== SIDEBAR THEMES ===================== */
+/* ===================== SIDEBAR ===================== */
 .sidebar {
     width: 240px;
     height: 100vh;
     padding: 20px;
+
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.sidebar.glass {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-right: 1px solid rgba(255,255,255,0.2);
-}
-
-.sidebar.standard {
-    background: #171717;
-    border-right: 1px solid #242424;
-}
-
 .sidebar .btn {
     padding: 10px 20px;
     border-radius: 0.5rem;
+    cursor: pointer;
+    border: none;
     transition: 0.2s ease;
 }
 
-.sidebar.glass .btn {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.sidebar.glass .btn:hover {
-    background: rgba(255,255,255,0.18);
-}
-
-.sidebar.standard .btn {
-    background: #2a2a2a;
-    border: 1px solid #3a3a3a;
-}
-
-.sidebar.standard .btn:hover {
-    background: #333;
-}
-
 /* ===================== RESPONSIVE SIDEBAR ===================== */
-/* Tablets */
 @media (max-width: 900px) {
     .sidebar {
         width: 200px;
@@ -145,46 +148,53 @@ body {
     }
 }
 
-/* Phones / Small screens */
 @media (max-width: 600px) {
-    .sidebar {
-        width: 70px;
-        padding: 10px;
-        align-items: center;
-        gap: 10px;
+    body {
+        flex-direction: column;
     }
 
-    /* Hide text on buttons, show icons only */
+    .sidebar {
+        flex-direction: row;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        gap: 8px;
+        justify-content: center;
+    }
+
     .sidebar .btn:not(.img-btn) {
         font-size: 0;
-        padding: 12px;
+        width: 40px;
+        height: 40px;
+        padding: 10px;
     }
 
     .sidebar .btn:not(.img-btn)::after {
-        content: attr(data-short); /* Add data-short="#" to buttons */
-        font-size: 14px;
+        content: attr(data-short);
+        font-size: 12px;
     }
 }
 
-/* ===================== RESPONSIVE UI BOX ===================== */
-.ui {
-    width: 90%;
-    max-width: 400px;
-    height: auto; /* Let height adjust to content */
-    padding: 20px;
-    margin: 10px auto;
+/* ===================== CODE EXAMPLE ===================== */
+.code-example {
+    margin-top: 15px;
+    width: 100%;
 }
 
-@media (max-width: 600px) {
-    .ui {
-        width: 95%;
-        padding: 15px;
-    }
+.code-example pre {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 0.5rem;
+    overflow-x: auto;
 }
 
-/* ===================== READY FOR FUTURE THEMES ===================== */
-/* Example:
-.ui.neon { ... }
-.ui.smooth { ... }
-.ui.material { ... }
-*/
+/* ===================== NOTIFICATION ===================== */
+.notification {
+    background: #2e2e2e;
+    color: #fff;
+    padding: 12px 18px;
+    margin-top: 20px;
+    border-radius: 0.5rem;
+    border-left: 4px solid #4a7dff;
+    width: fit-content;
+}
