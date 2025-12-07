@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#ffffff">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- Open Graph -->
     <meta property="og:title" content="Discord002">
     <meta property="og:type" content="website">
     <meta property="og:description" content="Discord002 Website">
@@ -15,42 +14,126 @@
     <meta name="keywords" content="DISCORD002, DSCWEB, Discord for web02">
     <link rel="icon" type="image/x-icon" href="media/favicon.ico">
 
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="media/css/main.css">
-
     <title>Discord002</title>
+
+    <style>
+        .auth-box {
+            width: 350px;
+            padding: 20px;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .auth-input {
+            padding: 10px;
+            border-radius: 0.5rem;
+            border: 1px solid #444;
+            width: 100%;
+        }
+        .auth-error {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-<body class="dark-theme"> <!-- or "light-theme" -->
+<body class="dark-theme">
 
     <!-- Sidebar -->
     <aside class="sidebar glass">
-        <!-- Logo / Image Button -->
         <button class="btn img-btn" style="width: 50px; height: 50px; padding: 0; border: none; background: none;">
             <img src="media/icon.png" alt="DISCORD002" style="width: 100%; height: auto; border-radius: 0.5rem;">
         </button>
-
-        <!-- Channel Buttons -->
         <button class="btn" data-short="#general"># general</button>
         <button class="btn" data-short="#database"># database</button>
     </aside>
 
     <!-- Main Content -->
     <main class="content">
+
         <div class="topbar glass">
             <input type="text" class="search" placeholder="Search...">
         </div>
 
-        <section class="ui glass">
-            <h2>Welcome to Discord002</h2>
-            <p>This is a demo of the dark/light themed UI.</p>
-            <button class="btn">Click Me</button>
+        <!-- AUTH UI -->
+        <section class="ui glass auth-box">
+
+            <h2 style="text-align:center;">Login</h2>
+
+            <input id="login-email" class="auth-input" type="email" placeholder="Email">
+            <input id="login-pass" class="auth-input" type="password" placeholder="Password">
+            
+            <button class="btn" id="login-btn">Login</button>
+
+            <p class="auth-error" id="login-error"></p>
+
+            <hr style="opacity:0.3;">
+            <h3 style="text-align:center;">Register</h3>
+
+            <input id="reg-email" class="auth-input" type="email" placeholder="Email">
+            <input id="reg-pass" class="auth-input" type="password" placeholder="Password">
+            
+            <button class="btn" id="reg-btn">Create Account</button>
+
+            <p class="auth-error" id="reg-error"></p>
+
         </section>
 
-        <!-- Example notification -->
-        <div class="notification">
-            This is a notification!
-        </div>
     </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+
+    <script>
+        // -------- FIREBASE SETUP --------
+        const firebaseConfig = {
+            apiKey: "AIzaSyASJwP_n6DcvfACpEla9L8qpMApp1f5_l4",
+            authDomain: "discord002-e78f0.firebaseapp.com",
+            databaseURL: "https://discord002-e78f0-default-rtdb.firebaseio.com",
+            projectId: "discord002-e78f0",
+            storageBucket: "discord002-e78f0.firebasestorage.app",
+            messagingSenderId: "232259988836",
+            appId: "1:232259988836:web:9ef0dcf4af872ef3965e71",
+            measurementId: "G-XEX6W5FSCT"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.getAuth(app);
+
+        // -------- LOGIN --------
+        document.getElementById("login-btn").onclick = function () {
+            const email = document.getElementById("login-email").value;
+            const pass = document.getElementById("login-pass").value;
+            const errorBox = document.getElementById("login-error");
+
+            firebase.signInWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    errorBox.textContent = "";
+                    alert("Logged in as: " + userCredential.user.email);
+                })
+                .catch((err) => {
+                    errorBox.textContent = err.message;
+                });
+        };
+
+        // -------- REGISTER --------
+        document.getElementById("reg-btn").onclick = function () {
+            const email = document.getElementById("reg-email").value;
+            const pass = document.getElementById("reg-pass").value;
+            const errorBox = document.getElementById("reg-error");
+
+            firebase.createUserWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    errorBox.textContent = "";
+                    alert("Account created: " + userCredential.user.email);
+                })
+                .catch((err) => {
+                    errorBox.textContent = err.message;
+                });
+        };
+    </script>
 
 </body>
 </html>
