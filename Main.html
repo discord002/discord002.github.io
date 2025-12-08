@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Discord002 — Main</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; height:100vh; display:flex; background:#0f1115; color:#e6eef8 }
+    .sidebar{width:260px;background:#0b0c0f;padding:1rem;box-sizing:border-box;border-right:1px solid #15171a}
+    .server-icon{font-size:24px;background:#2f3136;color:white;padding:8px;border-radius:8px;text-align:center;margin-bottom:12px}
+    .ch-btn{display:block;width:100%;text-align:left;padding:8px;border-radius:6px;border:none;background:transparent;color:inherit;cursor:pointer;margin-bottom:6px}
+    .ch-btn.active{background:#212428}
+    .user-list{margin-top:18px}
+    .main{flex:1;display:flex;flex-direction:column}
+    .header{padding:12px 16px;border-bottom:1px solid #15171a;background:#0f1115}
+    .messages{flex:1;overflow:auto;padding:12px}
+    .msg{padding:8px 10px;border-radius:8px;margin-bottom:8px;background:#131619}
+    .input-bar{display:flex;padding:10px;border-top:1px solid #15171a}
+    .input-bar input{flex:1;padding:8px;border-radius:6px;border:1px solid #1e2226;background:#0b0c0f;color:inherit}
+    .input-bar button{margin-left:8px;padding:8px 12px;border-radius:6px;background:#5865f2;border:none;color:white;cursor:pointer}
+    .typing-indicator{font-size:13px;color:#b9c0c7;padding-left:12px}
+    .user-item{padding:6px;border-radius:6px;cursor:pointer}
+    .dm-badge{font-size:11px;color:#9aa6b2;margin-left:6px}
+    .users-heading{margin-top:14px;font-size:14px;color:#9aa6b2}
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="server-icon">D</div>
+    <div>
+      <button class="ch-btn" data-channel="general" data-id="0001"># general</button>
+      <button class="ch-btn" data-channel="random" data-id="0002"># random</button>
+    </div>
+
+    <div class="users-heading">Users (click to DM)</div>
+    <div id="users" class="user-list"></div>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <h2 id="channel-title">Loading...</h2>
+      <div class="typing-indicator" id="typing-indicator"></div>
+    </header>
+
+    <section id="messages" class="messages"></section>
+
+    <footer class="input-bar">
+      <input id="msg-input" placeholder="Message..." autocomplete="off" />
+      <button id="send-btn">Send</button>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded, query, limitToLast, onValue, set, update, remove } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
+
+    // Reuse your firebase config from auth page
+    const firebaseConfig = {
+      apiKey: "AIzaSyASJwP_n6DcvfACpEla9L8qpMApp1f5_l4",
+      authDomain: "discord002-e78f0.firebaseapp.com",
+      databaseURL: "https://discord002-e78f0-default-rtdb.firebaseio.com",
+      projectId: "discord002-e78f0",
+      storageBucket: "discord002-e78f0.firebasestorage.app",
+      messagingSenderId: "232259988836",
+      appId: "1:232259988836:web:9ef0dcf4af872ef3965e71",
+      measurementId: "G-XEX6W5FSCT"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // read query params
+    const params = new URLSearchParams(window.location.search);
+    const userix = params.get('userix') || 'guest_' + Math.floor(Math.random()*10000);
+    let channelcurrent = params.get('channelcurrent') || 'general.0001';
+
+    // Utils to derive room id
+    function roomIdFromChannel(channelcurrent){
+      // if channelcurrent starts with dm_ then return as-is
+      if (!channelcurrent) return 'channel_0001';
+      if (channelcurrent.startsWith('dm_')) return channelcurrent;
+      const parts = channelcurrent.split('.');
+      return 'channel_' + (parts[1] || '0001');
+    }
+
+    function dmRoomIdFor(u1, u2){
+      const a = String(u1);
+      const b = String(u2);
+      return 'dm_' + (a < b ? a + '_' + b : b + '_' + a);
+    }
+
+    // presence / register minimal user node
+    const userRef = ref(db, `users/${userix}`);
+    set(userRef, { displayName: userix, lastOnline: Date.now() }).catch(console.error);
+
+    // show user list
+    const usersDiv = document.getElementById('users');
+    const usersRef = ref(db, 'users');
+    onValue(usersRef, (snap) => {
+      usersDiv.innerHTML = '';
+      snap.forEach(child => {
+        const key = child.key;
+        const val = child.val();
+        if (key === userix) return; // don't show self
+        const el = document.createElement('div');
+        el.className = 'user-item';
+        el.textContent = val.displayName || key;
+        const dmBadge = document.createElement('span'); dmBadge.className='dm-badge'; dmBadge.textContent='DM';
+        el.appendChild(dmBadge);
+        el.onclick = () => openDMWith(key);
+        usersDiv.appendChild(el);
+      });
+    });
+
+    // Messaging
+    const messagesDiv = document.getElementById('messages');
+    const titleEl = document.getElementById('channel-title');
+    const typingIndicatorEl = document.getElementById('typing-indicator');
+    const input = document.getElementById('msg-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    let currentRoomId = roomIdFromChannel(channelcurrent);
+    let isDm = currentRoomId.startsWith('dm_');
+
+    function loadRoom(roomId){
+      // clear messages and listeners
+      messagesDiv.innerHTML = '';
+      currentRoomId = roomId;
+      isDm = currentRoomId.startsWith('dm_');
+      titleEl.textContent = isDm ? ('DM — ' + roomId.replace('dm_','')) : ('# ' + (channelcurrent.split('.')[0] || 'general'));
+
+      const msgsRef = query(ref(db, `messages/${roomId}`), limitToLast(200));
+      onChildAdded(msgsRef, (snap) => {
+        const msg = snap.val();
+        appendMessage(msg);
+      });
+
+      // typing listener
+      const typingRef = ref(db, `typing/${roomId}`);
+      onValue(typingRef, (snap) => {
+        const typing = snap.val() || {};
+        const othersTyping = Object.keys(typing).filter(k => k !== userix && typing[k]);
+        typingIndicatorEl.textContent = othersTyping.length ? `${othersTyping.join(', ')} is typing...` : '';
+      });
+    }
+
+    function appendMessage(msg){
+      const el = document.createElement('div');
+      el.className = 'msg';
+      const by = document.createElement('div'); by.style.fontSize='12px'; by.style.opacity='0.8'; by.textContent = msg.uid;
+      const txt = document.createElement('div'); txt.textContent = msg.text;
+      el.appendChild(by);
+      el.appendChild(txt);
+      messagesDiv.appendChild(el);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function sendMessage(){
+      const text = input.value.trim();
+      if (!text) return;
+      const msg = { uid: userix, text, ts: Date.now(), dm: isDm };
+      push(ref(db, `messages/${currentRoomId}`), msg).then(()=>{
+        input.value='';
+        set(ref(db, `typing/${currentRoomId}/${userix}`), false);
+      }).catch(err => console.error(err));
+    }
+
+    // typing indicator handling (debounced)
+    let typingTimer = null;
+    input.addEventListener('input', () => {
+      set(ref(db, `typing/${currentRoomId}/${userix}`), true);
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(() => {
+        set(ref(db, `typing/${currentRoomId}/${userix}`), false);
+      }, 1200);
+    });
+    input.addEventListener('blur', () => set(ref(db, `typing/${currentRoomId}/${userix}`), false));
+
+    sendBtn.onclick = sendMessage;
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+    // init
+    loadRoom(currentRoomId);
+
+    // channel buttons
+    document.querySelectorAll('.ch-btn').forEach(btn => {
+      const ch = btn.dataset.channel;
+      const id = btn.dataset.id;
+      btn.onclick = () => {
+        channelcurrent = `${ch}.${id}`;
+        const newRoom = roomIdFromChannel(channelcurrent);
+        // update URL and reload room
+        const newUrl = `/main.html?userix=${userix}&channelcurrent=${channelcurrent}`;
+        window.history.pushState({}, '', newUrl);
+        loadRoom(newRoom);
+      };
+    });
+
+    // Open DM
+    function openDMWith(otherUserId){
+      const rm = dmRoomIdFor(userix, otherUserId);
+      channelcurrent = rm; // store dm room
+      const newUrl = `/main.html?userix=${userix}&channelcurrent=${channelcurrent}`;
+      window.history.pushState({}, '', newUrl);
+      loadRoom(rm);
+    }
+
+    // cleanup on unload
+    window.addEventListener('beforeunload', () => {
+      set(ref(db, `typing/${currentRoomId}/${userix}`), false);
+      set(ref(db, `users/${userix}/lastOnline`), Date.now());
+    });
+
+  </script>
+</body>
+</html>
