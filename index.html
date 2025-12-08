@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Discord002 Auth</title>
-  
 </head>
 <body>
   <aside class="sidebar">
-    <button class="btn img-btn"><img src="media/icon.png" /></button>
+    <button class="btn img-btn"><img src="media/icon.png" alt="logo"/></button>
   </aside>
 
   <main class="content">
@@ -56,6 +55,13 @@
         .then((user) => {
           errorBox.textContent = "";
           alert("Logged in as: " + user.user.email);
+          const uid = user.user.uid;
+          // dynamic channel selection placeholder
+          let channel = window.selectedChannel || "general";
+          // dynamic channel ID placeholder
+          let channelId = window.selectedChannelId || "0001";
+          // open main app in a new tab/window (fixed the missing closing parenthesis)
+          window.open(`/index.html?userix=${uid}&channelcurrent=${channel}.${channelId}`);
         })
         .catch((err) => {
           errorBox.textContent = err.message;
@@ -71,6 +77,11 @@
         .then((user) => {
           errorBox.textContent = "";
           alert("Account created: " + user.user.email);
+          const uid = user.user.uid;
+          const channel = window.selectedChannel || "general";
+          const channelId = window.selectedChannelId || "0001";
+          // open main app in a new tab/window (fixed the missing closing parenthesis)
+          window.location.href(`/main.html?userid=${uid}&channelcurrent=${channel}.${channelId}`);
         })
         .catch((err) => {
           errorBox.textContent = err.message;
