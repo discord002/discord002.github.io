@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Discord002 Auth</title>
+  <link rel="stylesheet" href="media/css/auth.js">
+  <link rel="stylesheet" href="meida/css/main.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -61,7 +63,7 @@
           // dynamic channel ID placeholder
           let channelId = window.selectedChannelId || "0001";
           // open main app in a new tab/window (fixed the missing closing parenthesis)
-          window.open(`/index.html?userix=${uid}&channelcurrent=${channel}.${channelId}`);
+          window.location.href = `$1`;
         })
         .catch((err) => {
           errorBox.textContent = err.message;
@@ -81,7 +83,7 @@
           const channel = window.selectedChannel || "general";
           const channelId = window.selectedChannelId || "0001";
           // open main app in a new tab/window (fixed the missing closing parenthesis)
-          window.location.href(`/main.html?userid=${uid}&channelcurrent=${channel}.${channelId}`);
+          window.location.href = `$1`;
         })
         .catch((err) => {
           errorBox.textContent = err.message;
